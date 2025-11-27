@@ -88,8 +88,3 @@ Features:
   - Evaluate “model vs market” differentials to focus on high-confidence bets.
 - Incorporate injury/travel/weather adjustments or player-level advanced metrics (QB EPA, pressure rates).
 - Experiment with alternative algorithms (LightGBM, XGBoost) or neural nets.
-- Package the pipeline for automated retraining (e.g., Prefect, Airflow) and add CI for unit tests/linting.
-
-## License
-
-This repository is for educational and portfolio purposes. NFL data belongs to its respective providers (nflverse / nflfastR). Use responsibly according to their terms of service.

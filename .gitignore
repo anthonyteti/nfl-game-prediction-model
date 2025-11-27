@@ -1,0 +1,18 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+
+# Environment / tooling
+.venv/
+.env
+.ipynb_checkpoints/
+
+# Data artifacts
+data/
+models/
+
+# OS / IDE files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

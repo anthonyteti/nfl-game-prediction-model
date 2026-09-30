@@ -82,6 +82,22 @@ Features:
 - **Models**: `sklearn.ensemble.GradientBoostingClassifier/Regressor` with median imputation. Artifacts stored under `models/`.
 - **Leakage controls**: feature builders drop per-week raw stats after computing time-aware aggregates. All modeling scripts share a leaky-column exclusion list to prevent final scores/labels from entering the feature matrix.
 
+## Validation and reproducibility
+
+Run the synthetic-data training smoke test from the repository root:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+This exercises the margin trainer, metric calculation, and artifact-save calls
+without downloading NFL data. It does not establish model quality or validate
+the complete ingestion pipeline. Dependencies are currently unpinned.
+
+Dashboard seasons 2019–2020 are validation seasons; only 2021–2023 are held-out
+test seasons. Keep those groups separate when reporting performance. The current
+binary label treats a tie as `home_win = 0`; it is not a three-way outcome model.
+
 ## Future Directions
 
 - Add categorical encodings (team, home/away splits) and calibrate probabilities.

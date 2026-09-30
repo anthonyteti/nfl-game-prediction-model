@@ -54,7 +54,7 @@ def train_margin_model() -> None:
     val_pred = model.predict(X_val_t)
 
     mae = mean_absolute_error(y_val, val_pred)
-    rmse = mean_squared_error(y_val, val_pred, squared=False)
+    rmse = np.sqrt(mean_squared_error(y_val, val_pred))
     r2 = r2_score(y_val, val_pred)
 
     print("Validation Metrics:")

@@ -1,0 +1,80 @@
+{
+  "validation": {
+    "n_games": 512,
+    "ties_labeled_zero": 2,
+    "always_home_accuracy": 0.505859375,
+    "models": {
+      "gradient_boosting": {
+        "accuracy": 0.638671875,
+        "log_loss": 0.6448395295526616,
+        "brier": 0.22719765913529483,
+        "roc_auc": 0.6890899934378195
+      },
+      "training_home_win_prior": {
+        "accuracy": 0.505859375,
+        "log_loss": 0.701589561747385,
+        "brier": 0.2541760103202161,
+        "roc_auc": 0.5
+      },
+      "spread_only_logistic": {
+        "accuracy": 0.658203125,
+        "log_loss": 0.6021514098955615,
+        "brier": 0.20758652412185785,
+        "roc_auc": 0.741099088925176
+      }
+    },
+    "margin_models": {
+      "gradient_boosting": {
+        "mae": 10.543315296838072,
+        "rmse": 13.52413091081232
+      },
+      "training_mean": {
+        "mae": 11.42147488064236,
+        "rmse": 14.724157658000076
+      },
+      "spread_only_linear": {
+        "mae": 10.051628810202056,
+        "rmse": 12.964883572548416
+      }
+    }
+  },
+  "test": {
+    "n_games": 815,
+    "ties_labeled_zero": 3,
+    "always_home_accuracy": 0.5423312883435583,
+    "models": {
+      "gradient_boosting": {
+        "accuracy": 0.6233128834355828,
+        "log_loss": 0.6653882923040525,
+        "brier": 0.23423278142350534,
+        "roc_auc": 0.6595689832955249
+      },
+      "training_home_win_prior": {
+        "accuracy": 0.5423312883435583,
+        "log_loss": 0.691198800694658,
+        "brier": 0.24901548785927857,
+        "roc_auc": 0.5
+      },
+      "spread_only_logistic": {
+        "accuracy": 0.6552147239263804,
+        "log_loss": 0.6194253451736161,
+        "brier": 0.21571652326244506,
+        "roc_auc": 0.7108014993995123
+      }
+    },
+    "margin_models": {
+      "gradient_boosting": {
+        "mae": 10.213109702049582,
+        "rmse": 13.247726046725873
+      },
+      "training_mean": {
+        "mae": 10.933341321574643,
+        "rmse": 14.111673235566311
+      },
+      "spread_only_linear": {
+        "mae": 9.834186056924963,
+        "rmse": 12.768159871141021
+      }
+    }
+  }
+}

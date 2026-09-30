@@ -82,6 +82,61 @@ Features:
 - **Models**: `sklearn.ensemble.GradientBoostingClassifier/Regressor` with median imputation. Artifacts stored under `models/`.
 - **Leakage controls**: feature builders drop per-week raw stats after computing time-aware aggregates. All modeling scripts share a leaky-column exclusion list to prevent final scores/labels from entering the feature matrix.
 
+## Validation and reproducibility
+
+### Reproduced held-out results
+
+Run `python -m src.reproduce` from the repository root to download/cache the
+required play-by-play columns, rebuild features, train both original models,
+and evaluate fixed win-probability baselines. Install the exact run dependencies
+with `python -m pip install -r requirements-reproduction.txt` in a Python 3.11
+virtual environment. The download requires internet access.
+
+The fixed protocol uses 2010–2018 for training, 2019–2020 for validation, and
+2021–2023 for testing. No hyperparameters were tuned in this reproduction.
+
+| Model | Test accuracy | Log loss ↓ | Brier score ↓ | ROC AUC ↑ |
+|---|---:|---:|---:|---:|
+| Gradient boosting with engineered features | 62.33% | 0.6654 | 0.2342 | 0.6596 |
+| Training-set home-win prior | 54.23% | 0.6912 | 0.2490 | 0.5000 |
+| Spread-only logistic regression | 65.52% | 0.6194 | 0.2157 | 0.7108 |
+
+Test set: **815 completed regular-season games**, including three ties labeled
+as home non-wins. Always predicting a home win also achieves 54.23% accuracy.
+The engineered model beats the constant baseline but underperforms the
+spread-only model on all four reported metrics. This run does not demonstrate
+incremental predictive value over the spread baseline.
+
+For home point differential, the gradient-boosting regressor has **10.21-point
+MAE** and **13.25-point RMSE**, versus **10.93 / 14.11** for the training-mean
+baseline and **9.83 / 12.77** for spread-only linear regression. All models are
+fit on the training seasons only.
+
+See [metrics](results/reproduction/metrics.json),
+[per-game predictions](results/reproduction/predictions.csv), and
+[data hashes, dependency versions, and feature list](results/reproduction/manifest.json).
+The data is a current nflverse download, not an archived historical release.
+Recorded weather and spreads lack decision-time snapshots here, so these are
+retrospective results, not evidence of deployable betting performance.
+Two consecutive full pipeline runs in the pinned Python 3.11.1 environment
+produced [identical metrics](results/reproduction/repeatability.json). A preliminary
+run in the pre-existing Python 3.12 environment gave slightly different results;
+the table above uses the fresh, pinned environment consistently.
+
+Run the synthetic-data training smoke test from the repository root:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+This exercises the margin trainer, metric calculation, and artifact-save calls
+without downloading NFL data. It does not establish model quality or validate
+the complete ingestion pipeline. Dependencies are currently unpinned.
+
+Dashboard seasons 2019–2020 are validation seasons; only 2021–2023 are held-out
+test seasons. Keep those groups separate when reporting performance. The current
+binary label treats a tie as `home_win = 0`; it is not a three-way outcome model.
+
 ## Future Directions
 
 - Add categorical encodings (team, home/away splits) and calibrate probabilities.
